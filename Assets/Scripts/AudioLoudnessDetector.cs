@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AudioLoudnessDetector : MonoBehaviour
 {
@@ -11,8 +12,17 @@ public class AudioLoudnessDetector : MonoBehaviour
     private AudioClip _microphoneClip;
     private string _microphoneName;
 
+    public static UnityAction OnScreamDetected;
+
     private void Start() {
         MicrophoneToAudioClip(0);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) {
+            OnScreamDetected?.Invoke();
+        }
     }
 
     private void OnEnable() {

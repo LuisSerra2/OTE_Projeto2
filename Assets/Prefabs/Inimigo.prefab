@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5179730652495867018}
   - component: {fileID: 3386638136979718941}
   - component: {fileID: 1625258608564693488}
-  - component: {fileID: 1304301680783031081}
+  - component: {fileID: -7981183310338723249}
   m_Layer: 0
   m_Name: Inimigo
   m_TagString: Untagged
@@ -107,7 +107,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1304301680783031081
+--- !u!114 &-7981183310338723249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -15,7 +15,7 @@ public class FillFromMicrophone : MonoBehaviour
     public float currentLoudnessSensibilty = 500f;
     public float threshold = 0.1f;
 
-    public static UnityAction OnScreamDetected;
+    //public static UnityAction OnScreamDetected;
 
     private void Start() {
         if (sensibilitySlider == null) return;
@@ -31,7 +31,7 @@ public class FillFromMicrophone : MonoBehaviour
 
         audioBar.fillAmount = loudness;
 
-        if (loudness > .5f && Bullets.canFire) OnScreamDetected?.Invoke();
+        //if (loudness > .5f && Bullets.canFire) OnScreamDetected?.Invoke();
 
     }
 

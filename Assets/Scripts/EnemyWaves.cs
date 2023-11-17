@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyWaves : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+   /* [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float maxX;
     [SerializeField] private float minX;
     [SerializeField] private float maxZ;
@@ -40,7 +40,23 @@ public class EnemyWaves : MonoBehaviour
     {
         currentEnemyCount--;
 
-        // Respawn an enemy immediately after one is destroyed
         SpawnEnemy();
+    } */
+
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private Transform[] spawnPoint;
+
+    private void Start()
+    {
+        for (int i = 0; i < 5; i++) {
+            RespawnEnemy(spawnPoint[i].position);
+        }
     }
+
+    private void RespawnEnemy(Vector3 spawnPoint)
+    {
+        GameObject enemy = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+        enemy.transform.rotation = Quaternion.Euler(0, 90, 90);
+    }
+  
 }
