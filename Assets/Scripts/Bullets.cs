@@ -6,6 +6,8 @@ public class Bullets : MonoBehaviour {
     public GameObject bulletPrefab;
     public GameObject bulletSpawnPosition;
 
+    [SerializeField] private float shootingForce;
+
     public static bool canFire = true;
 
     private void OnEnable() {
@@ -24,7 +26,7 @@ public class Bullets : MonoBehaviour {
         canFire = false;
         var bulletClone = Instantiate(bulletPrefab.GetComponent<Rigidbody>(), bulletSpawnPosition.transform.position, Quaternion.identity);
 
-        bulletClone.velocity = transform.forward * 10;
+        bulletClone.velocity = transform.forward * shootingForce;
 
 
         yield return new WaitForSeconds(.1f);
