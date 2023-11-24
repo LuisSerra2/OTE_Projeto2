@@ -3,6 +3,7 @@ using OpenCvSharp.Demo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows.WebCam;
 
 public class CountorFinder : WebCamera {
 
@@ -20,7 +21,8 @@ public class CountorFinder : WebCamera {
     private Point[][] contours;
     private HierarchyIndex[] hierarchyIndices;
 
-    protected override bool ProcessTexture(WebCamTexture input, ref Texture2D output) {
+    protected override bool ProcessTexture(WebCamTexture input, ref Texture2D output)
+    {
         image = OpenCvSharp.Unity.TextureToMat(input);
 
         Cv2.Flip(image, image, flipMode);
@@ -32,8 +34,27 @@ public class CountorFinder : WebCamera {
             Point[] points = Cv2.ApproxPolyDP(contour, curveAccuracy, true);
             var area = Cv2.ContourArea(contour);
 
+
+
             if (area > minArea) {
                 DrawCountor(processImage, new Scalar(127, 127, 127), 2, points);
+                // Calcular o centro
+                Point center = new Point(0, 0);
+
+                // Iteramos por todos os pontos
+                foreach (var point in points) {
+                    // Somamos todos os pontos ao centro
+                    center.X += point.X;
+                    center.Y += point.Y;
+                }
+
+                // Dividimos pelo numero de pontos para obter o centro
+                center.X /= points.Length;
+                center.Y /= points.Length;
+
+                Cv2.Line(processImage, center, center, new Scalar(127, 127, 127), 3);
+
+                testeY = center.Y;
             }
         }
 
@@ -47,12 +68,42 @@ public class CountorFinder : WebCamera {
         return true;
     }
 
-    private void DrawCountor(Mat image, Scalar color, int thickness, Point[] points) {
+    private void DrawCountor(Mat image, Scalar color, int thickness, Point[] points)
+    {
         for (int i = 1; i < points.Length; i++) {
-            Cv2.Circle(image, points[i - 1].X, points[i].Y * 2, 100, color, thickness);
+            Cv2.Line(image, points[i - 1], points[i], color, thickness);
         }
+        Cv2.Line(image, points[points.Length - 1], points[0], color, thickness);
 
-            testeY = points[0].Y * 2;
     }
+
+    //WebCamTexture _webCamTexture;
+    //CascadeClassifier _cascadeClassifier;
+
+    //private void Start()
+    //{
+    //    WebCamDevice[] devices = WebCamTexture.devices;
+
+    //    _webCamTexture = new WebCamTexture(devices[0].name);
+    //    _webCamTexture.Play();
+    //    _cascadeClassifier = new CascadeClassifier(Application.dataPath + @"haarcascade_frontalface_default.xml");
+    //}
+
+    //private void Update()
+    //{
+    //    GetComponent<Renderer>().material.mainTexture = _webCamTexture;
+    //    Mat frame = OpenCvSharp.Unity.TextureToMat(_webCamTexture);
+
+    //    FindFace(frame);
+    //}
+
+    //void FindFace(Mat frame)
+    //{
+    //    var faces = _cascadeClassifier.DetectMultiScale(frame, 1.1, 2, HaarDetectionType.ScaleImage);
+
+    //    if (faces.Length > 1) {
+    //        Debug.Log(faces[0].Location);
+    //    }
+    //}
 }
 

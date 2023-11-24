@@ -667,9 +667,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Surface: {fileID: 397407226}
   flipMode: -1
-  threshold: 150
+  threshold: 250
   showProcessingImage: 1
-  curveAccuracy: 5000
+  curveAccuracy: 10
   minArea: 5000
   testeY: 0
 --- !u!114 &397407229
@@ -1823,13 +1823,14 @@ GameObject:
   - component: {fileID: 1004944588}
   - component: {fileID: 1004944587}
   - component: {fileID: 1004944586}
+  - component: {fileID: 1004944590}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1004944586
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1910,13 +1911,32 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004944585}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.97, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -270, y: -180, z: 0}
+--- !u!114 &1004944590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004944585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8f0cb72788d644bb0561a30d83ff4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Surface: {fileID: 0}
+  flipMode: 0
+  threshold: 96.4
+  showProcessingImage: 1
+  curveAccuracy: 10
+  minArea: 5000
+  testeY: 0
 --- !u!1 &1056865369
 GameObject:
   m_ObjectHideFlags: 0

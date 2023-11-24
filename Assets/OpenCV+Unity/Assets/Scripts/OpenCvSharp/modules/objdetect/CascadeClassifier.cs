@@ -33,7 +33,7 @@ namespace OpenCvSharp
         public CascadeClassifier(string fileName)
         {
             if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("nameof(fileName)");
+                throw new ArgumentNullException(nameof(fileName));
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("\""+ fileName + "\"not found", fileName);
             ptr = NativeMethods.objdetect_CascadeClassifier_newFromFile(fileName);  
