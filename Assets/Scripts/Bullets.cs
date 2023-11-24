@@ -11,12 +11,10 @@ public class Bullets : MonoBehaviour {
     public static bool canFire = true;
 
     private void OnEnable() {
-        //FillFromMicrophone.OnScreamDetected += SpawnBullets;
-        AudioLoudnessDetector.OnScreamDetected += SpawnBullets;
+        FillFromMicrophone.OnScreamDetected += SpawnBullets;
     }
     private void OnDisable() {
-        //FillFromMicrophone.OnScreamDetected -= SpawnBullets;
-        AudioLoudnessDetector.OnScreamDetected -= SpawnBullets;
+        FillFromMicrophone.OnScreamDetected -= SpawnBullets;
     }
 
     private void SpawnBullets() {

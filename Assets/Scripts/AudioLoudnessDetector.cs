@@ -12,18 +12,10 @@ public class AudioLoudnessDetector : MonoBehaviour
     private AudioClip _microphoneClip;
     private string _microphoneName;
 
-    public static UnityAction OnScreamDetected;
-
     private void Start() {
         MicrophoneToAudioClip(0);
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) {
-            OnScreamDetected?.Invoke();
-        }
-    }
 
     private void OnEnable() {
         MicrophoneSelector.OnMicrophoneChoiceChanged += ChangeMicrophoneSource;
