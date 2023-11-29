@@ -18,43 +18,33 @@ public class CountorFinder : WebCamera {
 
     private Mat image;
     private Mat processImage = new Mat();
-    private Point[][] contours;
-    private HierarchyIndex[] hierarchyIndices;
 
-    protected override bool ProcessTexture(WebCamTexture input, ref Texture2D output)
-    {
+    OpenCvSharp.Rect myFist;
+    CascadeClassifier _cascadeClassifier;
+
+    private void Start() {
+        _cascadeClassifier = new CascadeClassifier();
+        string cascade = Application.dataPath + "/Resources/" + "fist.xml";
+        _cascadeClassifier.Load(cascade);
+    }
+
+    protected override bool ProcessTexture(WebCamTexture input, ref Texture2D output) {
         image = OpenCvSharp.Unity.TextureToMat(input);
 
+        // Image Filtering 
         Cv2.Flip(image, image, flipMode);
         Cv2.CvtColor(image, processImage, ColorConversionCodes.BGR2GRAY);
-        Cv2.Threshold(processImage, processImage, threshold, 255, ThresholdTypes.BinaryInv);
-        Cv2.FindContours(processImage, out contours, out hierarchyIndices, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple, null);
 
-        foreach (Point[] contour in contours) {
-            Point[] points = Cv2.ApproxPolyDP(contour, curveAccuracy, true);
-            var area = Cv2.ContourArea(contour);
+        //  Cascade Detection
+        var fist = _cascadeClassifier.DetectMultiScale(image, 1.1, 2, HaarDetectionType.ScaleImage, new Size(10, 10), new Size());
 
-
-
-            if (area > minArea) {
-                DrawCountor(processImage, new Scalar(127, 127, 127), 2, points);
-                // Calcular o centro
-                Point center = new Point(0, 0);
-
-                // Iteramos por todos os pontos
-                foreach (var point in points) {
-                    // Somamos todos os pontos ao centro
-                    center.X += point.X;
-                    center.Y += point.Y;
-                }
-
-                // Dividimos pelo numero de pontos para obter o centro
-                center.X /= points.Length;
-                center.Y /= points.Length;
-
-                Cv2.Line(processImage, center, center, new Scalar(127, 127, 127), 3);
-
-                testeY = center.Y;
+        // Fire Events
+        if (fist.Length >= 1) {
+            myFist = fist[0];
+            if (myFist != null) {
+                // Fire Event
+                processImage.Rectangle(myFist, new Scalar(250, 0, 0), 2);
+                testeY = myFist.Y;
             }
         }
 
@@ -68,41 +58,37 @@ public class CountorFinder : WebCamera {
         return true;
     }
 
-    private void DrawCountor(Mat image, Scalar color, int thickness, Point[] points)
-    {
-        for (int i = 1; i < points.Length; i++) {
-            Cv2.Line(image, points[i - 1], points[i], color, thickness);
-        }
-        Cv2.Line(image, points[points.Length - 1], points[0], color, thickness);
-
-    }
 
     //WebCamTexture _webCamTexture;
     //CascadeClassifier _cascadeClassifier;
 
-    //private void Start()
-    //{
+    //[HideInInspector]
+    //public float testeY;
+
+    //private void Start() {
     //    WebCamDevice[] devices = WebCamTexture.devices;
 
     //    _webCamTexture = new WebCamTexture(devices[0].name);
     //    _webCamTexture.Play();
-    //    _cascadeClassifier = new CascadeClassifier(Application.dataPath + @"haarcascade_frontalface_default.xml");
+    //    _cascadeClassifier = new CascadeClassifier();
+    //    string cascade = Application.dataPath + "/Resources/" + "fist.xml";
+    //    _cascadeClassifier.Load(cascade);
     //}
 
-    //private void Update()
-    //{
+    //private void Update() {
     //    GetComponent<Renderer>().material.mainTexture = _webCamTexture;
     //    Mat frame = OpenCvSharp.Unity.TextureToMat(_webCamTexture);
 
     //    FindFace(frame);
     //}
 
-    //void FindFace(Mat frame)
-    //{
+    //void FindFace(Mat frame) {
     //    var faces = _cascadeClassifier.DetectMultiScale(frame, 1.1, 2, HaarDetectionType.ScaleImage);
 
     //    if (faces.Length > 1) {
     //        Debug.Log(faces[0].Location);
+
+    //        testeY = faces[0].Y;
     //    }
     //}
 }
