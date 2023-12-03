@@ -1,30 +1,38 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager> {
     public GameObject gameOverPanel;
-    public Button restartButton;
+    public GameObject startPanel;
     public GameObject prefab;
     public GameObject obstaclesParent;
+
+    public Button restartButton;
+    public Button startButton;
+
     public TextMeshProUGUI scoreText;
 
     GameObject prefabClone;
 
     HandsGesture handsGesture;
 
+    public bool gameStart = false;
+
     private void Awake() {
         handsGesture = (HandsGesture)FindObjectOfType(typeof(HandsGesture));       
     }
 
     private void Start() {
-        SpawnPrefab();
-
         restartButton.onClick.AddListener(() => Restart());
+        startButton.onClick.AddListener(() => StartButton());
     }
+
 
     private void Update() {
         if (GameObject.FindGameObjectWithTag("Player") == null) {
@@ -34,6 +42,11 @@ public class UIManager : Singleton<UIManager> {
             gameOverPanel.SetActive(false);
             scoreText.text = "Score: " + ScoreManager.Instance.GetScore().ToString();
         }
+    }
+    private void StartButton() {
+        startPanel.SetActive(false);
+        gameStart = true;
+        SpawnPrefab();
     }
 
 

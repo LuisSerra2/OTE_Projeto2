@@ -10,7 +10,7 @@ public class Obstacle : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Border") {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         } else if (other.gameObject.tag == "Player") {
             Destroy(player.gameObject);
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class FillFromMicrophone : Singleton<FillFromMicrophone>
+public class FillFromMicrophone : MonoBehaviour
 {
     public Image audioBar;
     public Slider sensibilitySlider;
@@ -31,7 +31,7 @@ public class FillFromMicrophone : Singleton<FillFromMicrophone>
 
         audioBar.fillAmount = loudness;
 
-        if (loudness > .5f) OnScreamDetected?.Invoke();
+        if (loudness > .5f && FireBullets.Instance.canFire && UIManager.Instance.gameStart) OnScreamDetected?.Invoke();
 
     }
 

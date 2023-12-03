@@ -82,13 +82,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5697712092880611140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd8f0cb72788d644bb0561a30d83ff4d, type: 3}
+  m_Script: {fileID: 11500000, guid: a8c0702c7bb606543b1cac897fbba49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Surface: {fileID: 5697712092880611140}
   flipMode: 1
-  threshold: 96.4
   showProcessingImage: 1
-  curveAccuracy: 10
-  minArea: 5000
-  testeY: 0
