@@ -14,6 +14,12 @@ public class UIManager : Singleton<UIManager> {
 
     GameObject prefabClone;
 
+    HandsGesture handsGesture;
+
+    private void Awake() {
+        handsGesture = (HandsGesture)FindObjectOfType(typeof(HandsGesture));       
+    }
+
     private void Start() {
         SpawnPrefab();
 
@@ -32,7 +38,7 @@ public class UIManager : Singleton<UIManager> {
 
 
 
-    public void Restart() {
+    private void Restart() {
         foreach (Transform item in obstaclesParent.transform) {
             for (int i = 0; i < item.childCount; i++) {
                 Destroy(item.GetChild(i).gameObject);
