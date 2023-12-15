@@ -37,7 +37,7 @@ public class WebCammController : Singleton<WebCammController> {
     public void Update() {
         if (Input.GetKeyDown(KeyCode.A)) {
             deviceIndex++;
-            webcamTexture = new WebCamTexture(devices[deviceIndex].name);
+            webcamTexture = new WebCamTexture(devices[deviceIndex].name, 640, 320);
 
             GetComponent<Renderer>().material.mainTexture = webcamTexture;
             webcamTexture.Play();
