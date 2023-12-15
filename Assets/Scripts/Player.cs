@@ -1,37 +1,34 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 [SelectionBase]
 public class Player : Singleton<Player> {
+
+    public enum GameState {
+        Idle,
+        ChooseColor,
+        Player,
+        Restart
+    }
+
+    public GameState _GameState;
 
     public float speed = 10f;
 
     int playerMovemetnIndex;
 
-    HandsGesture handsGesture;
     Rigidbody rb;
 
-
-    private void Awake() {
-        handsGesture = (HandsGesture)FindObjectOfType(typeof(HandsGesture));
-        rb = GetComponent<Rigidbody>();
-    }
-    private void Start() {
-        handsGesture = (HandsGesture)FindObjectOfType(typeof(HandsGesture));
-    }
-
     private void OnEnable() {
-        handsGesture.ON_FIST_EVENT += MoveDownEvent;
-        handsGesture.ON_RPALM_EVENT += MoveUpEvent;
+        WebCammController.Instance.ON_FIST_EVENT += MoveDownEvent;
+        WebCammController.Instance.ON_RPALM_EVENT += MoveUpEvent;
     }
 
 
     private void OnDisable() {
-        handsGesture.ON_FIST_EVENT -= MoveUpEvent;
-        handsGesture.ON_RPALM_EVENT -= MoveUpEvent;
+        WebCammController.Instance.ON_FIST_EVENT -= MoveUpEvent;
+        WebCammController.Instance.ON_RPALM_EVENT -= MoveUpEvent;
     }
     private void MoveUpEvent() {
         playerMovemetnIndex = 0;
@@ -42,16 +39,12 @@ public class Player : Singleton<Player> {
     }
 
     private void Update() {
-
-        PlayerMovementHandler();
+        if (UIManager.Instance.CanPlay()) {
+            PlayerMovementHandler();
+        }
     }
 
-    private void FixedUpdate() {
-        
-        rb.velocity = new Vector3(0, transform.position.y , 0);
-    }
-
-    private void PlayerMovementHandler() {
+    public void PlayerMovementHandler() {
         float step = speed * Time.fixedDeltaTime;
 
         switch (playerMovemetnIndex) {

@@ -15,12 +15,15 @@ public class SpawnObstacles : Singleton<SpawnObstacles> {
     public GameObject obstacleClone;
 
     private void Update() {
+        if(UIManager.Instance.CanPlay()){
+            TimerAndSpawn();
+        }
+    }
+    public void TimerAndSpawn() {
         if (Time.time > spawnTime) {
             Spawn();
             spawnTime = Time.time + timeBetweenSpawn;
         }
-
-        
     }
 
     void Spawn() {

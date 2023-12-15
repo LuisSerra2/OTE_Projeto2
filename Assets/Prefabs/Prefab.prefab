@@ -394,6 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31cf8fdc244ae441afa1524e25f6193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _GameState: 0
   speed: 50
 --- !u!54 &1777526556480790096
 Rigidbody:
